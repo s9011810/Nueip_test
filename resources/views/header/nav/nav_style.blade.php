@@ -1,4 +1,4 @@
-@section('nav_style')
+
     <div class="container-fluid">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="#">測試網站</a>
@@ -33,4 +33,3 @@
             </div>
         </nav>
     </div>
-@endsection
