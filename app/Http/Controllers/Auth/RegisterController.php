@@ -58,6 +58,9 @@ class RegisterController extends Controller
             'birthday'=> ['required', 'date'],
         ]);
     }
+    public function showRegistrationForm(){
+        return View('register.register_info');
+    }
     /**
      * Create a new user instance after a valid registration.
      *

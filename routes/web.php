@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\MemberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +18,8 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/',[App\Http\Controllers\HomeController::class, 'index']);
 
 Auth::routes();
+Route::get('/logout', [LoginController::class,'logout']);
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/member_detail/{id}', [MemberController::class,'show']);
+Route::post('/member_detail/{id}', [MemberController::class,'update']);

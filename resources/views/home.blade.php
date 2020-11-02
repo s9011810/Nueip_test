@@ -109,7 +109,6 @@
             let email = $('#email').val();
             let phone = $('#phone').val();
             let sex = $('#sex').val();
-            let confirm = $('#password-confirm').val();
             let password = $('#password').val();
             let remarks = $('#remarks').val();
             let birthday = $('#birthday').val();
@@ -124,7 +123,6 @@
                         email: email,
                         phone: phone,
                         password: password,
-                        confirm: confirm,
                         remarks: remarks,
                         sex: sex,
                         birthday: birthday,
