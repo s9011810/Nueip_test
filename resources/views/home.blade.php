@@ -4,7 +4,7 @@
     <div class="container">
     <!-- Trigger the modal with a button -->
     <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">註冊</button>
-
+{{--        <a href="{{ route('register') }}">註冊</a>--}}
     <!-- Modal -->
     <div class="modal" id="myModal" role="dialog">
         <div class="modal-dialog">
@@ -17,15 +17,14 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
                 <div class="modal-body">
-
-                    <form method="post" id="insert_form" name="insert_form">
                         <div class="form-group row">
-                            <label for="name" class="col-md-4 col-form-label text-md-right">帳號</label>
+                            <input type="hidden" name="_token" id="csrf" value="{{Session::token()}}">
+                            <label for="login_name" class="col-md-4 col-form-label text-md-right">帳號</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input id="login_name" type="text" class="form-control @error('login_name') is-invalid @enderror" name="login_name" value="{{ old('login_name') }}" required autocomplete="login_name" autofocus>
 
-                                @error('name')
+                                @error('login_name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -92,7 +91,6 @@
                                 <input id="birthday" type="date" class="form-control" name="birthday" required>
                             </div>
                         </div>
-                    </form>
                 </div>
                 <div class="modal-footer  d-flex justify-content-center">
                     <button type="button" class="btn btn-danger" data-dismiss="modal">關閉</button>
@@ -107,7 +105,46 @@
 <script>
     $(document).ready(function(){
         $(document).on("click", "#Insert", function(event){
-            alert("確認新增");
+            let name = $('#login_name').val();
+            let email = $('#email').val();
+            let phone = $('#phone').val();
+            let sex = $('#sex').val();
+            let confirm = $('#password-confirm').val();
+            let password = $('#password').val();
+            let remarks = $('#remarks').val();
+            let birthday = $('#birthday').val();
+            if(name!=""&&email!=""&&phone!=""&&sex!=""&&password!=""&&remarks!=""&&birthday!=""){
+                $.ajax({
+                    url:"/register",
+                    type:"POST",
+                    data: {
+                        _token: $("#csrf").val(),
+                        type: 1,
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        password: password,
+                        confirm: confirm,
+                        remarks: remarks,
+                        sex: sex,
+                        birthday: birthday,
+                    },
+                    cache: false,
+                    success: function (dataResult) {
+                        console.log(dataResult);
+                        let test_dataResult = JSON.parse(dataResult);
+                        if(test_dataResult.statusCode==200){
+                            window.location = "/register";
+                        }
+                        else if(test_dataResult.statusCode==201){
+                            alert("Error occured !");
+                        }
+                    }
+                })
+            }
+            else{
+                alert('Please fill all the field !');
+            }
         });
     });
     // function submit_form() {
